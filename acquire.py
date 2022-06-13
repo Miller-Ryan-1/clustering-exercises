@@ -32,3 +32,27 @@ def get_zillow_data():
         df.to_csv(filename)
 
         return df
+
+def get_mall_data():
+    '''
+    Acquires mall customers dataframe by selecting all in SQL
+    '''
+    filename = 'mall_customers.csv'
+
+    if os.path.isfile(filename):
+        return pd.read_csv(filename, index_col=0)
+    else:
+        df = pd.read_sql(
+            '''
+            SELECT
+                *
+            FROM
+                customers;
+            '''
+            ,
+            get_db_url('mall_customers')
+        )
+
+        df.to_csv(filename)
+
+        return df
